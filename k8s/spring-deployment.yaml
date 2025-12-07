@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-app
+  namespace: devops
+spec:
+  selector:
+    matchLabels:
+      app: spring-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: spring-app
+    spec:
+      containers:
+      - name: spring
+        image: silaymen/student-management:latest   # ou ton image
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        # éventuellement env vars pour la DB
+        env:
+          - name: SPRING_DATASOURCE_URL
+            value: jdbc:mysql://mysql-service:3306/mydb
+          - name: SPRING_DATASOURCE_USERNAME
+            value: root
+          - name: SPRING_DATASOURCE_PASSWORD
+            value: your_root_password
