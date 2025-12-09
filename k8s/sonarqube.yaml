@@ -31,4 +31,5 @@ spec:
     targetPort: 9000
     protocol: TCP
     name: http
-  type: ClusterIP
+    nodePort: 30090   # <-- added NodePort
+  type: NodePort       # <-- changed from ClusterIP to NodePort
