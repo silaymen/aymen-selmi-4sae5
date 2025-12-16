@@ -16,9 +16,9 @@ data:
       - job_name: 'jenkins'
         metrics_path: /prometheus
         static_configs:
-          - targets: ['jenkins:8080']
+          - targets: ['jenkins.devops.svc.cluster.local:8080']
 
       - job_name: 'spring-app'
         metrics_path: /actuator/prometheus
         static_configs:
-          - targets: ['spring-app:8080']
+          - targets: ['spring-app.devops.svc.cluster.local:8080']
