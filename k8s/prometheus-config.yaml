@@ -10,18 +10,21 @@ data:
       evaluation_interval: 15s
 
     scrape_configs:
+
       # Prometheus itself
       - job_name: 'prometheus'
         static_configs:
           - targets: ['localhost:9090']
 
-      # Jenkins metrics
+      # Jenkins (via Kubernetes Service Discovery)
       - job_name: 'jenkins'
         metrics_path: /prometheus
-        static_configs:
-          - targets: ['jenkins:8080']
-
-      # Kubernetes nodes
-      - job_name: 'kubernetes-nodes'
         kubernetes_sd_configs:
-          - role: node
+          - role: service
+        relabel_configs:
+          - source_labels: [__meta_kubernetes_service_label_app]
+            action: keep
+            regex: jenkins
+          - source_labels: [__meta_kubernetes_namespace]
+            action: keep
+            regex: devops
